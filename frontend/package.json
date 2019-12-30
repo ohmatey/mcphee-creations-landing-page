@@ -3,13 +3,31 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "lint": "eslint .",
     "dev": "next dev",
     "build": "next build",
     "start": "NODE_ENV=production next start -p 8080"
   },
   "dependencies": {
+    "@emotion/styled": "^10.0.27",
+    "@next/bundle-analyzer": "^9.1.6",
+    "@rebass/forms": "^4.0.6",
+    "@rebass/preset": "^4.0.5",
+    "@sentry/browser": "5.10.2",
+    "dotenv": "^8.2.0",
+    "emotion-theming": "^10.0.27",
     "next": "9.1.6",
+    "next-compose-plugins": "^2.2.0",
+    "next-offline": "^4.0.6",
     "react": "16.12.0",
-    "react-dom": "16.12.0"
+    "react-dom": "16.12.0",
+    "react-helmet": "5.2.1",
+    "react-social-icons": "4.1.0",
+    "rebass": "^4.0.7"
+  },
+  "devDependencies": {
+    "eslint": "6.8.0",
+    "eslint-config-google": "0.14.0",
+    "eslint-plugin-react": "7.17.0"
   }
 }
