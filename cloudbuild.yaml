@@ -4,15 +4,17 @@ steps:
   args:
   - 'builds'
   - 'submit'
-  - --config=./frontend/cloudbuild.yaml
+  - --config=./cloudbuild.yaml
   - '.'
+  dir: 'frontend'
 
 - name: 'gcr.io/cloud-builders/gcloud'
   args:
   - 'builds'
   - 'submit'
-  - --config=./server/cloudbuild.yaml
+  - --config=./cloudbuild.yaml
   - '.'
+  dir: 'server'
 
 timeout: 1200s
 
