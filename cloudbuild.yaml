@@ -1,6 +1,6 @@
 steps:
 - id: 'build service2'
   name: 'gcr.io/cloud-builders/gcloud'
-  args: ['builds', 'submit', '--config cloudbuild.yaml']
-  waitFor: ['-'] # start in parallel
+  args: ['builds', 'submit', '--config server/cloudbuild.yaml']
   dir: 'server'
+  waitFor: ['-']
