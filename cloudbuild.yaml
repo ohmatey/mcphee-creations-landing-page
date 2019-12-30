@@ -1,0 +1,24 @@
+steps:
+# build the client docker image
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    for d in */; do
+      config="${d}cloudbuild.yaml"
+      if [[ ! -f "${config}" ]]; then
+        continue
+      fi
+      echo "Building $d ... "
+      (
+        gcloud builds submit $d --config=${config}
+      ) &
+    done
+    wait
+timeout: 1200s
+# default values
+# substitutions:
+#   _NODE_ENV__: 'production'
+
+# cloud-build-local --config=./cloudbuild.yaml --dryrun=false --push .

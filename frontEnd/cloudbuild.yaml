@@ -1,0 +1,28 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/front-end:latest', '.']
+    env:
+      - NODE_ENV=${_NODE_ENV__}
+      - SITE_DESCRIPTION=${_SITE_DESCRIPTION}
+      - SITE_TITLE=${_SITE_TITLE}
+      - SENTRY_URL=${_SENTRY_URL}
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/front-end:latest']
+
+  # deploy to cloud run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+      'beta', 'run', 'deploy', 'front-end',
+      '--platform', 'managed',
+      '--region', 'us-central1',
+      '--image', 'gcr.io/$PROJECT_ID/front-end:latest'
+    ]
+
+substitutions:
+  _NODE_ENV__: 'development'
+  _SITE_DESCRIPTION: 'Assisting thinkers & SME’s to carve out their space in the web world.'
+  _SITE_TITLE: 'McPhee Creations'
+  _SENTRY_URL: 'https://4deddfb1f8e44192838529b8f1e69cae@sentry.io/1530490'
+
+images: ['gcr.io/$PROJECT_ID/front-end:latest']
