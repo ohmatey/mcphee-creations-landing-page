@@ -5,7 +5,7 @@ steps:
 
   # use firebase image to deploy
   - name: 'gcr.io/$PROJECT_ID/firebase'
-    args: [ 'deploy', '--project', $PROJECT_ID]
+    args: [ 'deploy', '--project', $PROJECT_ID, './server']
 
 images:
   - 'gcr.io/$PROJECT_ID/firebase'
