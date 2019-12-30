@@ -1,21 +1,44 @@
 steps:
-# build the client docker image
-- name: 'gcr.io/cloud-builders/gcloud'
-  args:
-  - 'builds'
-  - 'submit'
-  - --config=./cloudbuild.yaml
-  - '.'
-  dir: 'frontend'
+# Add some checks around examples.
 
 - name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
   args:
-  - 'builds'
-  - 'submit'
-  - --config=./cloudbuild.yaml
-  - '.'
-  dir: 'server'
-
-timeout: 1200s
-
-# cloud-build-local --config=./cloudbuild.yaml --dryrun=false --push .
+  - '-c'
+  - |
+    # File that contains failures.
+    failure_file=failure.log
+    touch ${failure_file}
+    # Loop through the builders, and build independently.
+    for d in */; do
+      readme="${d}README.md"
+      if [[ ! -f "${readme}" ]]; then
+        # Note the error but try to build anyway.
+        echo "${d}: ${readme} not found." | tee -a ${failure_file}
+      fi
+      config="${d}cloudbuild.yaml"
+      if [[ ! -f "${config}" ]]; then
+        echo "${d} failed: ${config} not found." | tee -a ${failure_file}
+        continue
+      fi
+      
+      echo "Building $d ... "
+      (
+        logfile="${d::-1}.log" # Logfile for "foo/" builder is "foo.log".
+        gcloud builds submit $d --config=${config} > ${logfile} 2>&1
+        if [[ $? -ne 0 ]]; then
+          echo "$d failed" | tee -a ${failure_file}
+          cat ${logfile}
+        fi
+      ) &
+    done
+    wait
+    # Check if there is any failure.
+    if [[ -s ${failure_file} ]]; then
+      echo
+      echo "Some builds failed:"
+      cat ${failure_file}
+      echo "Exiting."
+      exit 1
+    fi
+    echo "All builds succeeded."
