@@ -5,17 +5,15 @@ steps:
   - 'builds'
   - 'submit'
   - --config=./frontend/cloudbuild.yaml
-  - './frontend'
+  - '.'
 
 - name: 'gcr.io/cloud-builders/gcloud'
   args:
   - 'builds'
   - 'submit'
   - --config=./server/cloudbuild.yaml
-  - './server'
+  - '.'
+
 timeout: 1200s
-# default values
-# substitutions:
-#   _NODE_ENV__: 'production'
 
 # cloud-build-local --config=./cloudbuild.yaml --dryrun=false --push .
