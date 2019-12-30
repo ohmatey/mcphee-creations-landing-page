@@ -1,6 +1,6 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/front-end:latest', './frontend/Dockerfile']
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/front-end:latest', '.']
     env:
       - NODE_ENV=${_NODE_ENV__}
       - SITE_DESCRIPTION=${_SITE_DESCRIPTION}
