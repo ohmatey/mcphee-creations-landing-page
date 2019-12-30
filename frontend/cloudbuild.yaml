@@ -23,6 +23,6 @@ substitutions:
   _NODE_ENV__: 'development'
   _SITE_DESCRIPTION: 'Assisting thinkers & SME’s to carve out their space in the web world.'
   _SITE_TITLE: 'McPhee Creations'
-  _SENTRY_URL: ''
+  _SENTRY_URL: '.'
 
 images: ['gcr.io/$PROJECT_ID/front-end:latest']
