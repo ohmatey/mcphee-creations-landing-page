@@ -16,7 +16,7 @@
     "@sentry/browser": "5.10.2",
     "dotenv": "^8.2.0",
     "emotion-theming": "^10.0.27",
-    "next": "9.1.6",
+    "next": "11.1.0",
     "next-compose-plugins": "^2.2.0",
     "next-offline": "^4.0.6",
     "react": "16.12.0",
